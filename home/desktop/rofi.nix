@@ -11,9 +11,10 @@ in
   };
 
   # -------------------------------------------------------------------------
-  # Layout ported from harsh-m-patil/.dotfiles (pre-nix branch) — a wide,
-  # two-column grid launcher with a colored "prompt" pill, rather than a
-  # single vertical list. Colors swapped for our own palette.
+  # Layout ported from harsh-m-patil/.dotfiles (pre-nix branch) — a two-column
+  # grid launcher with a colored "prompt" pill. Colors swapped for our own
+  # palette. Window sized down from the original 1000x360 (which rendered
+  # far too wide) to a more reasonable ~700x420.
   # -------------------------------------------------------------------------
   xdg.configFile."rofi/config.rasi".text = ''
     configuration {
@@ -39,8 +40,7 @@ in
         fg-col2:      ${colors.color1};
         grey:         ${colors.color8};
 
-        width: 600;
-        font: "JetBrainsMono Nerd Font 14";
+        font: "JetBrainsMono Nerd Font 12";
     }
 
     element-text, element-icon, mode-switcher {
@@ -49,8 +49,8 @@ in
     }
 
     window {
-        height: 360px;
-        width: 1000px;
+        height: 420px;
+        width: 700px;
         border: 2px;
         border-radius: 15px;
         border-color: @border-col;
@@ -73,7 +73,7 @@ in
         padding: 6px;
         text-color: @bg-col;
         border-radius: 3px;
-        margin: 20px 0px 0px 20px;
+        margin: 16px 0px 0px 16px;
     }
 
     textbox-prompt-colon {
@@ -83,7 +83,7 @@ in
 
     entry {
         padding: 6px;
-        margin: 20px 0px 0px 10px;
+        margin: 16px 0px 0px 10px;
         text-color: @fg-col;
         background-color: @bg-col;
     }
@@ -91,9 +91,9 @@ in
     listview {
         border: 0px;
         padding: 6px 0px 0px;
-        margin: 10px 0px 0px 20px;
+        margin: 10px 0px 0px 16px;
         columns: 2;
-        lines: 10;
+        lines: 8;
         background-color: @bg-col;
     }
 
@@ -104,7 +104,7 @@ in
     }
 
     element-icon {
-        size: 35px;
+        size: 26px;
     }
 
     element selected {
@@ -138,7 +138,7 @@ in
 
     textbox {
         padding: 6px;
-        margin: 20px 0px 0px 20px;
+        margin: 16px 0px 0px 16px;
         text-color: @accent;
         background-color: @bg-col-light;
     }

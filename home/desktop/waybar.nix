@@ -38,7 +38,6 @@ in
         "hyprland/workspaces" = {
           format = "{icon}";
           on-click = "activate";
-          format-icons = { active = " "; };
           sort-by-number = true;
           persistent-workspaces = {
             "*" = 5;
@@ -51,39 +50,39 @@ in
         };
 
         cpu = {
-          format = "  {usage}%";
+          format = "  {usage}%";
           tooltip = false;
         };
 
         memory = {
-          format = "{}%  ";
+          format = "{}%  ";
         };
 
         temperature = {
           critical-threshold = 80;
           format = "{icon} {temperatureC}°C";
-          format-icons = [ "" "" "" ];
+          format-icons = [ "" "" "" ];
         };
 
         battery = {
           states = { warning = 30; critical = 15; };
           format = "{icon}  {capacity}%";
           format-full = "{icon}  {capacity}%";
-          format-charging = "  {capacity}%";
-          format-plugged = "  {capacity}%";
+          format-charging = "  {capacity}%";
+          format-plugged = "  {capacity}%";
           format-alt = "{time} {icon}";
-          format-icons = [ "" "" "" "" "" ];
+          format-icons = [ "" "" "" "" "" ];
           interval = 5;
         };
 
         network = {
           format = "{ifname}";
-          format-wifi = "  {signalStrength}%  {bandwidthDownBytes}  {bandwidthUpBytes} ";
-          format-ethernet = "   {bandwidthDownBytes}  {bandwidthUpBytes} ";
+          format-wifi = "  {signalStrength}%  {bandwidthDownBytes}  {bandwidthUpBytes} ";
+          format-ethernet = "  {bandwidthDownBytes}  {bandwidthUpBytes} ";
           format-disconnected = "Not connected";
-          tooltip-format = "  {ifname} via {gwaddri}";
-          tooltip-format-wifi = "   {essid} ({signalStrength}%)";
-          tooltip-format-ethernet = "  {ifname} ({ipaddr}/{cidr})";
+          tooltip-format = "  {ifname} via {gwaddri}";
+          tooltip-format-wifi = "  {essid} ({signalStrength}%)";
+          tooltip-format-ethernet = "  {ifname} ({ipaddr}/{cidr})";
           tooltip-format-disconnected = "Disconnected";
           max-length = 50;
           interval = 1;
@@ -96,13 +95,13 @@ in
           format-bluetooth-muted = " {icon} {format_source}";
           format-muted = "";
           format-icons = {
-            headphone = "";
-            hands-free = "";
-            headset = "";
-            phone = "";
-            portable = "";
-            car = "";
-            default = [ "" "" "" ];
+            headphone = "";
+            hands-free = "";
+            headset = "";
+            phone = "";
+            portable = "";
+            car = "";
+            default = [ "" "" "" ];
           };
           on-click = "pavucontrol";
         };
@@ -146,8 +145,10 @@ in
 
       #workspaces button.focused,
       #workspaces button.active {
-          background-color: ${colors.color4};
-          box-shadow: inset 0 -3px ${colors.foreground};
+          background-color: transparent;
+          color: ${colors.color4};
+          font-weight: bold;
+          box-shadow: inset 0 -3px ${colors.color4};
       }
 
       #workspaces button.urgent {
