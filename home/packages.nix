@@ -24,7 +24,6 @@
     # User GUI Applications, Productivity & Media
     vscode
     obsidian
-    spotify
     mpv
     vlc
     loupe

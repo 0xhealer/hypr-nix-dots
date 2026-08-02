@@ -11,5 +11,6 @@
         ./neovim.nix
         ./editor.nix
         ./alacritty.nix
+        ./browsers.nix
     ];
 }

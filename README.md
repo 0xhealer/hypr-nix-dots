@@ -68,6 +68,7 @@ doesn't change when you pick a new one (see below).
 | App launcher | Rofi |
 | Notifications | Dunst |
 | Terminal | Kitty, with Alacritty installed as a fallback |
+| Spotify theming | Spicetify (Dracula theme) |
 | File manager | Thunar |
 | Lock screen | hyprlock |
 | Idle daemon | hypridle |
@@ -85,7 +86,7 @@ doesn't change when you pick a new one (see below).
 
 Plus the general dev/productivity layer this repo carries: fish shell,
 starship, neovim, VS Code, git + lazygit, fastfetch, zoxide/fzf/bat/eza,
-mpv, Docker, Tailscale.
+mpv, Docker, Tailscale, Zen Browser (default) and Helium as a second option.
 
 No KDE/Plasma anywhere in this config — it's Hyprland end to end.
 
@@ -218,6 +219,17 @@ home/
 
 ## Troubleshooting
 
+**Spotify (or other Electron apps) crash or won't open on the VM.**
+Electron/Chromium apps run their own separate GPU compositing path
+independent of whatever renderer Hyprland itself is using, so the Pixman
+workaround above doesn't automatically cover them. Spotify itself is now
+supplied by Spicetify (`home/style/spicetify.nix`) rather than a plain
+package, so if it crashes the same way Kitty did, the `--disable-gpu` fix
+needs to be re-applied to whatever package Spicetify's module actually
+produces — check `programs.spicetify`'s options for a way to pass extra
+launch flags, or wrap its output package the same way the old
+`spotify-vm-safe` derivation did.
+
 **Every app that opens a window crashes instantly with `wl_display: error 1:
 invalid arguments for wl_surface.attach` (not just Kitty).** You're running
 this inside a VM, and its virtual GPU driver can't correctly negotiate the
@@ -262,4 +274,5 @@ manual fallback.
 - [candy-icons](https://github.com/EliverLara/candy-icons) — by [EliverLara](https://github.com/EliverLara)
 - [Bibata cursors](https://github.com/ful1e5/Bibata_Cursor)
 - [Catppuccin for SDDM](https://github.com/catppuccin/sddm)
+- [Spicetify](https://spicetify.app) / [spicetify-nix](https://github.com/Gerg-L/spicetify-nix)
 - [Home Manager](https://github.com/nix-community/home-manager)
