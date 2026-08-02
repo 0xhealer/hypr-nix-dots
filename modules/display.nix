@@ -17,7 +17,7 @@
   # Enable Polkit Security Framework
   security.polkit.enable = true;
 
-  # GNOME Polkit Graphical Authentication Agent (matches the GTK/Sweet-Mars
+  # GNOME Polkit Graphical Authentication Agent (matches the GTK/Sweet
   # stack now that Plasma has been removed; started from hyprland.nix's
   # exec-once)
   environment.systemPackages = [ pkgs.polkit_gnome ];
