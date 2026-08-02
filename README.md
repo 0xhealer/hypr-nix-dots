@@ -18,6 +18,7 @@
 - [Requirements](#requirements)
 - [Quick start](#quick-start)
 - [The stack](#the-stack)
+- [Hyprland config: Lua, not hyprlang](#hyprland-config-lua-not-hyprlang)
 - [Color theming — how it actually works](#color-theming--how-it-actually-works)
 - [Blur & transparency](#blur--transparency)
 - [Keybinds](#keybinds)
@@ -88,6 +89,29 @@ mpv, Docker, Tailscale.
 
 No KDE/Plasma anywhere in this config — it's Hyprland end to end.
 
+## Hyprland config: Lua, not hyprlang
+
+Hyprland 0.55 replaced its old config language (hyprlang, the `.conf`
+format) with a real embedded Lua runtime. `.conf` still works for now but
+is deprecated and will eventually stop working entirely, so this repo's
+Hyprland config is written directly as `~/.config/hypr/hyprland.lua`
+(`home/desktop/hyprland.nix`) — hand-written text, not generated through
+home-manager's `settings` attrset.
+
+That's a deliberate choice, not a style preference: home-manager's
+settings→Lua translator has an open, unresolved upstream bug specifically
+around `$`-prefixed variables (`nix-community/home-manager#9468`), and
+this config leans on exactly that pattern everywhere (keybind mod keys,
+wallust-sourced colors). Hand-writing the `.lua` file sidesteps the bug
+entirely.
+
+A handful of dispatcher names in there (workspace switching, move-to-
+workspace, mouse move/resize, the exact shape of `opacity` in a window
+rule) aren't independently confirmed against Hyprland's actual Lua API
+surface — they're commented `-- TODO: verify` in the file. If a bind
+silently doesn't fire, diff it against the canonical example Hyprland
+ships at `/usr/share/hypr/hyprland.lua` on your machine.
+
 ## Color theming — how it actually works
 
 Waypaper's `post_command` (see `home/desktop/tools.nix`) runs `wallust run`
@@ -98,7 +122,8 @@ on whatever wallpaper you pick. wallust reads the templates in
 - `~/.config/kitty/colors.conf`
 - `~/.config/rofi/colors.rasi`
 - `~/.config/dunst/dunstrc`
-- `~/.config/hypr/colors.conf`
+- `~/.config/hypr/colors.lua` — a plain Lua table (`return { active_border
+  = "...", ... }`), `dofile()`'d from the top of `hyprland.lua`
 
 These five files are deliberately **not** managed via home-manager's
 `xdg.configFile`, which would make them read-only symlinks that wallust
@@ -108,7 +133,7 @@ them once — with a specific dark palette baked in — the first time you run
 then on. Re-running the rebuild never clobbers whatever wallust has
 generated since.
 
-Dunst is launched via Hyprland's `exec-once` rather than home-manager's
+Dunst is launched via Hyprland's autostart hook rather than home-manager's
 `services.dunst`, for the same reason — its config needs to stay writable.
 If Dunst's colors look stale after a wallpaper change, restart it
 (`killall dunst; dunst &`, or just re-login).
@@ -198,11 +223,20 @@ nixpkgs unstable periodically renames packages (this repo has already hit
 Not a bug in this config — just update the package reference to whatever
 name the error says it's now called, in the file the error trace points to.
 
+**A terminal opens and vanishes almost immediately.** Don't try to
+reproduce this from a bare TTY (`Ctrl+Alt+F3`) — there's no compositor
+running there at all, so it'll just fail on a missing `DISPLAY`/Wayland
+socket, which tells you nothing about the real crash. The `Super+Return`
+bind in `hyprland.nix` redirects kitty's output to
+`/tmp/kitty-debug.log` for exactly this reason — trigger the bind once,
+then read that file's contents (from another app, or over SSH) for the
+actual error. Once diagnosed, remove the redirect from the bind.
+
 **`hypridle` doesn't seem to start.** It runs as its own systemd user
-service rather than via `exec-once`, which occasionally doesn't fire
-without a session manager like UWSM. If it's not idling/locking, add
-`"hypridle"` to the `exec-once` list in `home/desktop/hyprland.nix` as a
-manual fallback.
+service rather than via the autostart hook, which occasionally doesn't
+fire without a session manager like UWSM. If it's not idling/locking, add
+`hl.exec_cmd("hypridle")` to the `hl.on("hyprland.start", ...)` block in
+`home/desktop/hyprland.nix` as a manual fallback.
 
 **Dunst notification colors look stale after changing wallpaper.** Restart
 it — `killall dunst; dunst &` — or just re-login. It's launched once at

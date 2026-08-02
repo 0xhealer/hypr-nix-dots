@@ -31,17 +31,19 @@
           target = "~/.config/dunst/dunstrc";
         };
         hyprland = {
-          template = "hyprland-colors.conf";
-          target = "~/.config/hypr/colors.conf";
+          template = "hyprland-colors.lua";
+          target = "~/.config/hypr/colors.lua";
         };
       };
     };
   };
 
-  xdg.configFile."wallust/templates/hyprland-colors.conf".text = ''
-    $active_border = rgb({{color4}})
-    $inactive_border = rgb({{color8}})
-    $accent = rgb({{color6}})
+  xdg.configFile."wallust/templates/hyprland-colors.lua".text = ''
+    return {
+      active_border = "rgb({{color4}})",
+      inactive_border = "rgb({{color8}})",
+      accent = "rgb({{color6}})",
+    }
   '';
 
   xdg.configFile."wallust/templates/waybar-colors.css".text = ''
@@ -117,7 +119,7 @@
   # -------------------------------------------------------------------------
   # Seed the wallust *target* files with your exact supplied palette.
   #
-  # These targets (hypr/colors.conf, waybar/colors.css, rofi/colors.rasi,
+  # These targets (hypr/colors.lua, waybar/colors.css, rofi/colors.rasi,
   # kitty/colors.conf, dunst/dunstrc) are NOT managed via xdg.configFile,
   # because home-manager would symlink them read-only into the Nix store —
   # and wallust needs to overwrite them at runtime every time you pick a
@@ -130,10 +132,12 @@
     mkdir -p "$HOME/.config/hypr" "$HOME/.config/waybar" "$HOME/.config/rofi" \
              "$HOME/.config/kitty" "$HOME/.config/dunst"
 
-    [ -f "$HOME/.config/hypr/colors.conf" ] || cat > "$HOME/.config/hypr/colors.conf" <<'EOF'
-$active_border = rgb(9580FF)
-$inactive_border = rgb(364049)
-$accent = rgb(80FFEA)
+    [ -f "$HOME/.config/hypr/colors.lua" ] || cat > "$HOME/.config/hypr/colors.lua" <<'EOF'
+return {
+  active_border = "rgb(9580FF)",
+  inactive_border = "rgb(364049)",
+  accent = "rgb(80FFEA)",
+}
 EOF
 
     [ -f "$HOME/.config/waybar/colors.css" ] || cat > "$HOME/.config/waybar/colors.css" <<'EOF'
