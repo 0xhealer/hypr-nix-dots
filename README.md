@@ -81,7 +81,7 @@ doesn't change when you pick a new one (see below).
 | Qt theming | qt5ct / qt6ct |
 | Screenshots | grim + slurp + swappy |
 | Clipboard | cliphist + wl-clipboard |
-| Display manager | SDDM |
+| Display manager | SDDM, themed with catppuccin-sddm (mocha + mauve) |
 
 Plus the general dev/productivity layer this repo carries: fish shell,
 starship, neovim, VS Code, git + lazygit, fastfetch, zoxide/fzf/bat/eza,
@@ -218,6 +218,22 @@ home/
 
 ## Troubleshooting
 
+**Every app that opens a window crashes instantly with `wl_display: error 1:
+invalid arguments for wl_surface.attach` (not just Kitty).** You're running
+this inside a VM, and its virtual GPU driver can't correctly negotiate the
+hardware buffer path Hyprland tries by default — a well-documented
+Hyprland-in-VM issue, seen with VMware's `vmwgfx`, virtio-gpu, and others.
+Already worked around in `home/desktop/hyprland.nix` by forcing the
+software (Pixman) renderer:
+```lua
+hl.env("WLR_RENDERER", "pixman")
+hl.env("WLR_NO_HARDWARE_CURSORS", "1")
+hl.env("WLR_RENDERER_ALLOW_SOFTWARE", "1")
+```
+Trade-off: Pixman is CPU-only and historically has weak-to-no blur support,
+so you may lose the blur effect while virtualized. If you move this config
+to bare metal with a real GPU, remove those three lines.
+
 **Build fails with `'<package>' has been renamed to/replaced by '<newname>'`.**
 nixpkgs unstable periodically renames packages (this repo has already hit
 `qt6ct` → `qt6Packages.qt6ct` and `rofi-wayland` → merged into `rofi`).
@@ -245,4 +261,5 @@ manual fallback.
 - [adw-gtk3](https://github.com/lassekongo83/adw-gtk3)
 - [candy-icons](https://github.com/EliverLara/candy-icons) — by [EliverLara](https://github.com/EliverLara)
 - [Bibata cursors](https://github.com/ful1e5/Bibata_Cursor)
+- [Catppuccin for SDDM](https://github.com/catppuccin/sddm)
 - [Home Manager](https://github.com/nix-community/home-manager)

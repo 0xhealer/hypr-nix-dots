@@ -35,6 +35,20 @@ in
 
     hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })
 
+    -- Forces the software (Pixman) renderer and disables hardware cursors.
+    -- Needed when running inside a VM whose virtual GPU driver (VMware
+    -- vmwgfx, virtio-gpu, etc.) can't correctly negotiate the hardware
+    -- buffer path Hyprland tries by default — without this, EVERY app that
+    -- opens a Wayland surface (not just Kitty) crashes immediately with
+    -- "wl_display: error 1: invalid arguments for wl_surface.attach",
+    -- a well-documented Hyprland-in-VM issue. If you're on bare metal with
+    -- a real GPU, remove these three lines — Pixman is CPU-only and
+    -- historically has weaker/no support for blur, so this is a real
+    -- trade-off: stability over the blur effect while virtualized.
+    hl.env("WLR_RENDERER", "pixman")
+    hl.env("WLR_NO_HARDWARE_CURSORS", "1")
+    hl.env("WLR_RENDERER_ALLOW_SOFTWARE", "1")
+
     hl.env("XCURSOR_THEME", "Bibata-Modern-Ice")
     hl.env("XCURSOR_SIZE", "24")
     hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")
@@ -51,7 +65,7 @@ in
         gaps_in = 5,
         gaps_out = 12,
         border_size = 2,
-        ["col.active_border"] = "${activeBorder} ${inactiveBorder} 45deg",
+        ["col.active_border"] = "${activeBorder}",
         ["col.inactive_border"] = "${inactiveBorder}",
         layout = "dwindle",
         resize_on_border = true,
