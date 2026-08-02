@@ -2,7 +2,7 @@
 
 let
   colors = import ../style/colors.nix;
-  strip = lib.removePrefix "#";
+  strip = c: lib.toLower (lib.removePrefix "#" c);
   activeBorder = "rgba(${strip colors.color4}ee)";
   inactiveBorder = "rgba(${strip colors.color8}aa)";
 in
