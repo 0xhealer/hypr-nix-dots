@@ -127,5 +127,5 @@ in
 
   # Qt apps follow the same theme via qt5ct/qt6ct
   home.sessionVariables.QT_QPA_PLATFORMTHEME = "qt5ct";
-  home.packages = with pkgs; [ libsForQt5.qt5ct qt6ct ];
+  home.packages = with pkgs; [ libsForQt5.qt5ct qt6Packages.qt6ct ];
 }
