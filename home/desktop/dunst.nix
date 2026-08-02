@@ -1,11 +1,30 @@
 { pkgs, ... }:
 
+let
+  colors = import ../style/colors.nix;
+in
 {
-  # Not using services.dunst's declarative config on purpose: wallust needs
-  # to overwrite ~/.config/dunst/dunstrc at runtime whenever the wallpaper
-  # changes, and home-manager-managed config files are read-only symlinks
-  # into the Nix store. Dunst itself is launched via exec-once in
-  # hyprland.nix; the seed dunstrc is written once by the activation
-  # script in style/wallust.nix.
-  home.packages = [ pkgs.dunst ];
+  services.dunst = {
+    enable = true;
+    settings = {
+      global = {
+        corner_radius = 10;
+        frame_width = 2;
+        font = "JetBrainsMono Nerd Font 10";
+        transparency = 15;
+      };
+      urgency_low = {
+        background = colors.background;
+        foreground = colors.foreground;
+      };
+      urgency_normal = {
+        background = colors.background;
+        foreground = colors.foreground;
+      };
+      urgency_critical = {
+        background = colors.background;
+        foreground = colors.color1;
+      };
+    };
+  };
 }

@@ -49,15 +49,11 @@ cat <<'EOF'
 ==> Done!
 
 Next steps:
-  1. If the build failed on a hash mismatch for sweet-mars-theme, sweet-cursors,
-     or sweet-folders-mars — that's expected on first run. Copy the "got:
-     sha256-..." value from the error into home/style/gtk.nix (replacing the
-     matching lib.fakeHash), then re-run this script.
-  2. Reboot, pick the "Hyprland" session at the SDDM login screen.
-  3. Open Waypaper and pick a wallpaper once — this fires wallust, which
-     re-colors Waybar, Kitty, Rofi, Dunst, and your Hyprland borders in
-     one shot from then on.
-  4. Super+Shift+Q opens the wlogout power menu.
+  1. Reboot, pick the "Hyprland" session at the SDDM login screen.
+  2. Open Waypaper to pick a wallpaper — purely cosmetic, the color scheme
+     is static (home/style/colors.nix) and doesn't change with it.
+  3. Super+Return opens Kitty (falls back to Alacritty automatically if
+     Kitty crashes). Super+Shift+Q opens the wlogout power menu.
 
 EOF
 echo "==> Step 6: Rebooting into Hyprland in 10 seconds (Ctrl+C to cancel)..."

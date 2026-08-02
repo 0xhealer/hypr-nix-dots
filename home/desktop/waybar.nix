@@ -1,5 +1,8 @@
 { pkgs, ... }:
 
+let
+  colors = import ../style/colors.nix;
+in
 {
   programs.waybar = {
     enable = true;
@@ -28,27 +31,25 @@
     };
 
     style = ''
-      @import url("colors.css");
-
       * {
           font-family: "JetBrainsMono Nerd Font";
           font-size: 13px;
       }
 
       window#waybar {
-          background: alpha(@background, 0.75);
-          color: @foreground;
+          background: alpha(${colors.background}, 0.75);
+          color: ${colors.foreground};
           border-radius: 10px;
           margin: 6px 10px;
       }
 
       #workspaces button {
           padding: 0 8px;
-          color: @foreground;
+          color: ${colors.foreground};
       }
 
       #workspaces button.active {
-          background: alpha(@color4, 0.4);
+          background: alpha(${colors.color4}, 0.4);
           border-radius: 8px;
       }
 

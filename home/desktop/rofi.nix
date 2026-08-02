@@ -1,5 +1,8 @@
 { pkgs, ... }:
 
+let
+  colors = import ../style/colors.nix;
+in
 {
   programs.rofi = {
     enable = true;
@@ -7,12 +10,7 @@
     terminal = "kitty";
   };
 
-  # NOTE: rofi/colors.rasi is a wallust target — seeded once (writably) by
-  # the activation script in style/wallust.nix, not managed here.
-
   xdg.configFile."rofi/config.rasi".text = ''
-    @import "colors.rasi"
-
     configuration {
         modi: "drun,run,window";
         show-icons: true;
@@ -20,15 +18,15 @@
     }
 
     window {
-        background-color: @background;
+        background-color: ${colors.background};
         border-radius: 12px;
         border: 2px;
-        border-color: @accent;
+        border-color: ${colors.color4};
     }
 
     element selected {
-        background-color: @accent;
-        text-color: @background;
+        background-color: ${colors.color4};
+        text-color: ${colors.background};
     }
   '';
 }

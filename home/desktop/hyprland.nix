@@ -1,5 +1,11 @@
 { pkgs, config, lib, ... }:
 
+let
+  colors = import ../style/colors.nix;
+  strip = lib.removePrefix "#";
+  activeBorder = "rgba(${strip colors.color4}ee)";
+  inactiveBorder = "rgba(${strip colors.color8}aa)";
+in
 {
   # -------------------------------------------------------------------------
   # Hyprland is enabled here purely for package/xwayland/systemd/portal
@@ -7,8 +13,12 @@
   # NOT home-manager's `settings` attrset — home-manager's settings→lua
   # translator has an open, unresolved bug specifically with `$`-prefixed
   # variables (nix-community/home-manager#9468), which is exactly the kind
-  # of thing this config leans on (keybind mod keys, wallust-sourced
-  # colors). Writing the .lua by hand sidesteps that bug entirely.
+  # of thing this config leans on (keybind mod keys). Writing the .lua by
+  # hand sidesteps that bug entirely.
+  #
+  # Colors are the static palette in style/colors.nix, interpolated in at
+  # build time by Nix — no wallpaper-driven regeneration, no runtime file
+  # writes to fight home-manager over.
   # -------------------------------------------------------------------------
   wayland.windowManager.hyprland = {
     enable = true;
@@ -17,16 +27,11 @@
 
   xdg.configFile."hypr/hyprland.lua".text = ''
     -- Hand-written Hyprland 0.55+ Lua config.
-    -- A few dispatcher names below (workspace switch, move-to-workspace,
-    -- mouse move/resize) aren't independently confirmed against the exact
-    -- API surface — if a bind silently doesn't fire, diff it against the
-    -- canonical example shipped at /usr/share/hypr/hyprland.lua.
+    -- The window-rule `opacity` field's exact shape (string vs table) isn't
+    -- independently confirmed — if it doesn't apply, check the wiki or
+    -- /usr/share/hypr/hyprland.lua for the current form.
 
     local mainMod = "SUPER"
-
-    -- wallust writes this after every wallpaper pick in Waypaper; seeded
-    -- once by the activation script in style/wallust.nix before that.
-    local colors = dofile(os.getenv("HOME") .. "/.config/hypr/colors.lua")
 
     hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })
 
@@ -46,8 +51,8 @@
         gaps_in = 5,
         gaps_out = 12,
         border_size = 2,
-        ["col.active_border"] = colors.active_border .. " " .. colors.inactive_border .. " 45deg",
-        ["col.inactive_border"] = colors.inactive_border,
+        ["col.active_border"] = "${activeBorder} ${inactiveBorder} 45deg",
+        ["col.inactive_border"] = "${inactiveBorder}",
         layout = "dwindle",
         resize_on_border = true,
       },
@@ -87,9 +92,9 @@
       hl.exec_cmd("waybar")
       hl.exec_cmd("swww-daemon")
       hl.exec_cmd("waypaper --restore")
-      hl.exec_cmd("dunst")
       hl.exec_cmd("wl-paste --watch cliphist store")
-      -- hypridle runs as its own systemd user service (see hypridle.nix)
+      -- dunst and hypridle run as their own systemd user services (see
+      -- dunst.nix / hypridle.nix)
       hl.exec_cmd("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
     end)
 
@@ -98,10 +103,12 @@
     -- independently confirmed — verify against your Hyprland version if it
     -- doesn't apply.
     hl.window_rule({ match = { class = "^(kitty)$" }, opacity = "0.90 0.85" })
+    hl.window_rule({ match = { class = "^(Alacritty)$" }, opacity = "0.90 0.85" })
     hl.window_rule({ match = { class = "^(thunar)$" }, opacity = "0.95 0.90" })
 
-    -- Keybinds
-    hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("kitty > /tmp/kitty-debug.log 2>&1"))
+    -- Keybinds — tries Kitty first, falls back to Alacritty if Kitty
+    -- crashes/exits immediately; output still logged for diagnosis.
+    hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("kitty > /tmp/kitty-debug.log 2>&1 || alacritty"))
     hl.bind(mainMod .. " + Q", hl.dsp.window.close())
     hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("thunar"))
     hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("rofi -show drun"))
@@ -110,17 +117,15 @@
     hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd("wlogout -b 5"))
     hl.bind("PRINT", hl.dsp.exec_cmd('grim -g "$(slurp)" - | swappy -f -'))
 
-    -- Workspaces — TODO: verify hl.dsp.workspace / hl.dsp.window.move_to_workspace
-    -- against /usr/share/hypr/hyprland.lua; not independently confirmed.
+    -- Workspaces
     for i = 1, 4 do
-      hl.bind(mainMod .. " + " .. tostring(i), hl.dsp.workspace(i))
-      hl.bind(mainMod .. " + SHIFT + " .. tostring(i), hl.dsp.window.move_to_workspace(i))
+      hl.bind(mainMod .. " + " .. tostring(i), hl.dsp.focus({ workspace = i }))
+      hl.bind(mainMod .. " + SHIFT + " .. tostring(i), hl.dsp.window.move({ workspace = i }))
     end
 
-    -- Mouse move/resize — TODO: verify against /usr/share/hypr/hyprland.lua,
-    -- the exact mouse-bind dispatcher call isn't independently confirmed.
-    -- hl.bind(mainMod, "mouse:272", hl.dsp.window.move(), { mouse = true })
-    -- hl.bind(mainMod, "mouse:273", hl.dsp.window.resize(), { mouse = true })
+    -- Mouse move/resize
+    hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+    hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
     -- Media / brightness keys
     hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pamixer -i 5"), { repeating = true })

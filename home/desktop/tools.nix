@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   services.cliphist = {
@@ -16,21 +16,30 @@
     text_font=sans-serif
   '';
 
-  xdg.configFile."waypaper/config.ini".text = ''
-    [Settings]
-    language = en
-    folder = ~/.local/share/hypr-nix-dots/assets/wallpapers
-    wallpaper = ~/.local/share/hypr-nix-dots/assets/wallpapers/6.png
-    backend = swww
-    fill = fill
-    sort = name
-    subfolders = False
-    number_of_columns = 3
-    post_command = wallust run $wallpaper
-    swww_transition_type = outer
-    swww_transition_step = 90
-    swww_transition_angle = 30
-    swww_transition_duration = 2
-    swww_transition_fps = 60
+  # NOT xdg.configFile: Waypaper writes its own state (last-picked wallpaper,
+  # fill mode, sort order, etc.) back to config.ini after every GUI
+  # interaction — a home-manager-managed file here would be a read-only
+  # Nix store symlink, and Waypaper would hit a permission error trying to
+  # save (a confirmed upstream-reported failure mode in exactly this setup:
+  # anufrievroman/waypaper#98). Seeded once, writably, same reasoning as
+  # every other "runtime tool needs to write here" file in this repo.
+  home.activation.seedWaypaperConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    mkdir -p "$HOME/.config/waypaper"
+    [ -f "$HOME/.config/waypaper/config.ini" ] || cat > "$HOME/.config/waypaper/config.ini" <<'EOF'
+[Settings]
+language = en
+folder = ~/.local/share/hypr-nix-dots/assets/wallpapers
+wallpaper = ~/.local/share/hypr-nix-dots/assets/wallpapers/6.png
+backend = swww
+fill = fill
+sort = name
+subfolders = False
+number_of_columns = 3
+swww_transition_type = outer
+swww_transition_step = 90
+swww_transition_angle = 30
+swww_transition_duration = 2
+swww_transition_fps = 60
+EOF
   '';
 }

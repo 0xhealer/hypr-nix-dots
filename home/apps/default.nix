@@ -10,5 +10,6 @@
         ./media.nix
         ./neovim.nix
         ./editor.nix
+        ./alacritty.nix
     ];
 }

@@ -1,5 +1,5 @@
 {
-  description = "Hyprland Dots - Modular NixOS Configuration (Sweet theme + wallust)";
+  description = "Hyprland Dots - Modular NixOS Configuration (static color palette)";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
