@@ -1,6 +1,16 @@
 {
   description = "Hyprland Dots - Modular NixOS Configuration (static color palette)";
 
+  # Vicinae publishes pre-built binaries here specifically so people don't
+  # have to compile its C++ source themselves — without this, a rebuild
+  # tries to build vicinae from scratch, which is memory-hungry enough to
+  # get OOM-killed on a resource-constrained VM. Nix will prompt you to
+  # trust this substituter/key the first time; say yes.
+  nixConfig = {
+    extra-substituters = [ "https://vicinae.cachix.org" ];
+    extra-trusted-public-keys = [ "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=" ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 

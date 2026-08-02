@@ -41,8 +41,11 @@ git add -f hosts/nixos/hardware-configuration.nix
 git add -A
 
 echo "==> Step 5: Rebuilding system with Flakes..."
-# The NIX_CONFIG environment variable takes care of sudo inheriting the features
-sudo NIX_CONFIG="experimental-features = nix-command flakes" nixos-rebuild switch --flake .#nixos --impure
+# The NIX_CONFIG environment variable takes care of sudo inheriting the features.
+# accept-flake-config auto-trusts the vicinae Cachix substituter this flake
+# declares, so the scripted rebuild doesn't hang on an interactive Y/N prompt.
+sudo NIX_CONFIG="experimental-features = nix-command flakes
+accept-flake-config = true" nixos-rebuild switch --flake .#nixos --impure
 
 cat <<'EOF'
 
