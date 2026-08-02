@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   programs.yazi = {
@@ -22,4 +22,15 @@
       "application/x-gnome-saved-search" = [ "thunar.desktop" ];
     };
   };
+
+  # Thunar's icon view defaults to 100% zoom, which renders quite large.
+  # Forced every rebuild via xfconf (its actual settings backend) — not
+  # "seed once" like our other activation scripts, since we're actively
+  # tuning this value. If you later want to freely change it yourself via
+  # Thunar's View menu without it reverting on the next rebuild, remove
+  # this activation block entirely.
+  home.activation.setThunarZoom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    $DRY_RUN_CMD ${pkgs.xfce.xfconf}/bin/xfconf-query -c thunar \
+      -p /last-icon-view-zoom-level -n -t string -s THUNAR_ZOOM_LEVEL_25_PERCENT
+  '';
 }

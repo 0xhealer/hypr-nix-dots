@@ -69,7 +69,7 @@ doesn't change when you pick a new one (see below).
 | App launcher | Vicinae (primary), Rofi (always available) |
 | Notifications | Dunst |
 | Terminal | Kitty, with Alacritty installed as a fallback |
-| Spotify theming | Spicetify (Dracula theme) |
+| Spotify theming | Spicetify (custom theme generated from colors.nix) |
 | File manager | Thunar |
 | Lock screen | hyprlock |
 | Idle daemon | hypridle |

@@ -33,7 +33,11 @@ in
 
     local mainMod = "SUPER"
 
-    hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })
+    -- scale forced to 1 rather than "auto" — auto-detection can pick a
+    -- HiDPI factor (1.25/1.5) for whatever resolution the VM's virtual
+    -- display reports, which would inflate every app's UI uniformly
+    -- (bar, launcher, file manager) even though nothing else changed.
+    hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
 
     -- Forces the software (Pixman) renderer and disables hardware cursors.
     -- Needed when running inside a VM whose virtual GPU driver (VMware

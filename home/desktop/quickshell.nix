@@ -24,14 +24,14 @@ ShellRoot {
     id: root
 
     // Theme colors
-    property color colBg: "#0B0D0F"
-    property color colFg: "#F8F8F2"
-    property color colMuted: "#364049"
-    property color colCyan: "#80FFEA"
-    property color colPurple: "#9580FF"
-    property color colRed: "#FF9580"
-    property color colYellow: "#FFFF80"
-    property color colBlue: "#AA99FF"
+    property color colBg: "#0B0E11"
+    property color colFg: "#D8DEE9"
+    property color colMuted: "#4C566A"
+    property color colCyan: "#88C0D0"
+    property color colPurple: "#81A1C1"
+    property color colRed: "#BF616A"
+    property color colYellow: "#EBCB8B"
+    property color colBlue: "#5E81AC"
 
     // Font
     property string fontFamily: "JetBrainsMono Nerd Font"

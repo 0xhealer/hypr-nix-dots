@@ -3,27 +3,30 @@
 # design: no wallpaper-driven regeneration, no runtime file-writing tool
 # to fight home-manager's read-only symlinks over. Change a value here,
 # rebuild, and it's consistent everywhere.
+#
+# Nord palette (nordtheme.com) — full turnaround from the earlier
+# Dracula-style scheme.
 {
-  background = "#0B0D0F";
-  foreground = "#F8F8F2";
-  cursor = "#708CA9";
-  selectionBackground = "#414D58";
-  selectionForeground = "#F8F8F2";
+  background = "#0B0E11"; # darkened from Nord0 (#2E3440) — pure blackish, not grey-blue
+  foreground = "#D8DEE9"; # Nord4
+  cursor = "#88C0D0"; # Nord8
+  selectionBackground = "#434C5E"; # Nord2
+  selectionForeground = "#ECEFF4"; # Nord6
 
-  color0 = "#22212C";
-  color1 = "#FF9580";
-  color2 = "#8AFF80";
-  color3 = "#FFFF80";
-  color4 = "#9580FF";
-  color5 = "#FF80BF";
-  color6 = "#80FFEA";
-  color7 = "#F8F8F2";
-  color8 = "#364049";
-  color9 = "#FFAA99";
-  color10 = "#A2FF99";
-  color11 = "#FFFF99";
-  color12 = "#AA99FF";
-  color13 = "#FF99CC";
-  color14 = "#99FFEE";
-  color15 = "#FFFFFF";
+  color0 = "#3B4252";  # Nord1  - black
+  color1 = "#BF616A";  # Nord11 - red
+  color2 = "#A3BE8C";  # Nord14 - green
+  color3 = "#EBCB8B";  # Nord13 - yellow
+  color4 = "#81A1C1";  # Nord9  - blue
+  color5 = "#B48EAD";  # Nord15 - magenta
+  color6 = "#88C0D0";  # Nord8  - cyan
+  color7 = "#E5E9F0";  # Nord5  - white
+  color8 = "#4C566A";  # Nord3  - bright black
+  color9 = "#BF616A";  # Nord11 - bright red
+  color10 = "#A3BE8C"; # Nord14 - bright green
+  color11 = "#EBCB8B"; # Nord13 - bright yellow
+  color12 = "#81A1C1"; # Nord9  - bright blue
+  color13 = "#B48EAD"; # Nord15 - bright magenta
+  color14 = "#8FBCBB"; # Nord7  - bright cyan
+  color15 = "#ECEFF4"; # Nord6  - bright white
 }

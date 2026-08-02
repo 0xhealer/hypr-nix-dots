@@ -77,12 +77,12 @@ in
 
         network = {
           format = "{ifname}";
-          format-wifi = "  {signalStrength}%  {bandwidthDownBytes}  {bandwidthUpBytes} ";
-          format-ethernet = "  {bandwidthDownBytes}  {bandwidthUpBytes} ";
+          format-wifi = "WiFi {signalStrength}%  {bandwidthDownBytes}  {bandwidthUpBytes} ";
+          format-ethernet = "LAN  {bandwidthDownBytes}  {bandwidthUpBytes} ";
           format-disconnected = "Not connected";
-          tooltip-format = "  {ifname} via {gwaddri}";
-          tooltip-format-wifi = "  {essid} ({signalStrength}%)";
-          tooltip-format-ethernet = "  {ifname} ({ipaddr}/{cidr})";
+          tooltip-format = "{ifname} via {gwaddri}";
+          tooltip-format-wifi = "{essid} ({signalStrength}%)";
+          tooltip-format-ethernet = "{ifname} ({ipaddr}/{cidr})";
           tooltip-format-disconnected = "Disconnected";
           max-length = 50;
           interval = 1;
@@ -111,7 +111,7 @@ in
     style = ''
       * {
           font-family: "JetBrainsMono Nerd Font", Roboto, Helvetica, Arial, sans-serif;
-          font-size: 15px;
+          font-size: 12px;
       }
 
       window#waybar {
@@ -148,7 +148,6 @@ in
           background-color: transparent;
           color: ${colors.color4};
           font-weight: bold;
-          box-shadow: inset 0 -3px ${colors.color4};
       }
 
       #workspaces button.urgent {

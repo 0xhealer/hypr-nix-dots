@@ -40,7 +40,7 @@ in
         fg-col2:      ${colors.color1};
         grey:         ${colors.color8};
 
-        font: "JetBrainsMono Nerd Font 12";
+        font: "JetBrainsMono Nerd Font 11";
     }
 
     element-text, element-icon, mode-switcher {
@@ -49,8 +49,8 @@ in
     }
 
     window {
-        height: 420px;
-        width: 700px;
+        height: 340px;
+        width: 560px;
         border: 2px;
         border-radius: 15px;
         border-color: @border-col;
@@ -104,7 +104,7 @@ in
     }
 
     element-icon {
-        size: 26px;
+        size: 20px;
     }
 
     element selected {

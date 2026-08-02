@@ -2,7 +2,7 @@
 
 let
   # Catppuccin Mocha + Mauve — closest match to our own dark/purple palette
-  # (colors.nix: background #0B0D0F, accent #9580FF). Reuses the same
+  # (colors.nix: background #0B0E11, accent #81A1C1). Reuses the same
   # wallpaper Waypaper defaults to, so the login screen and desktop match.
   sddmTheme = pkgs.catppuccin-sddm.override {
     flavor = "mocha";
