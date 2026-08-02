@@ -72,21 +72,16 @@ in
       },
 
       decoration = {
-        rounding = 14,
+        rounding = 4,
         active_opacity = 0.90,
         inactive_opacity = 0.80,
         blur = {
           enabled = true,
-          size = 10,
-          passes = 4,
+          size = 7,
+          passes = 3,
           new_optimizations = true,
           ignore_opacity = true,
           xray = false,
-          vibrancy = 0.20,
-        },
-        shadow = {
-          enabled = true,
-          range = 16,
         },
       },
 

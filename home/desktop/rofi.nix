@@ -10,82 +10,137 @@ in
     terminal = "kitty";
   };
 
+  # -------------------------------------------------------------------------
+  # Layout ported from harsh-m-patil/.dotfiles (pre-nix branch) — a wide,
+  # two-column grid launcher with a colored "prompt" pill, rather than a
+  # single vertical list. Colors swapped for our own palette.
+  # -------------------------------------------------------------------------
   xdg.configFile."rofi/config.rasi".text = ''
     configuration {
-        modi: "drun,run,window";
+        modi: "run,drun,window";
         show-icons: true;
-        font: "JetBrainsMono Nerd Font 11";
+        drun-display-format: "{icon} {name}";
+        location: 0;
+        disable-history: false;
+        hide-scrollbar: true;
+        display-drun: "   Apps ";
+        display-run: "   Run ";
+        display-window: "   Window";
+        sidebar-mode: true;
     }
 
     * {
-        background-color: transparent;
-        text-color: ${colors.foreground};
+        bg-col:       ${colors.background};
+        bg-col-light: ${colors.color0};
+        border-col:   ${colors.color4};
+        selected-col: ${colors.background};
+        accent:       ${colors.color4};
+        fg-col:       ${colors.foreground};
+        fg-col2:      ${colors.color1};
+        grey:         ${colors.color8};
+
+        width: 600;
+        font: "JetBrainsMono Nerd Font 14";
+    }
+
+    element-text, element-icon, mode-switcher {
+        background-color: inherit;
+        text-color: inherit;
     }
 
     window {
-        background-color: ${colors.background};
-        border-radius: 12px;
+        height: 360px;
+        width: 1000px;
         border: 2px;
-        border-color: ${colors.color4};
-        width: 600px;
+        border-radius: 15px;
+        border-color: @border-col;
+        background-color: @bg-col;
     }
 
     mainbox {
-        background-color: transparent;
-        padding: 12px;
-        children: [ "inputbar", "listview" ];
+        background-color: @bg-col;
     }
 
     inputbar {
-        background-color: ${colors.color0};
-        text-color: ${colors.foreground};
-        border-radius: 8px;
-        padding: 8px 12px;
-        margin: 0 0 10px 0;
-        children: [ "prompt", "entry" ];
+        children: [ prompt, entry ];
+        background-color: @bg-col;
+        border-radius: 5px;
+        padding: 2px;
     }
 
     prompt {
-        text-color: ${colors.color4};
-        padding: 0 8px 0 0;
+        background-color: @accent;
+        padding: 6px;
+        text-color: @bg-col;
+        border-radius: 3px;
+        margin: 20px 0px 0px 20px;
+    }
+
+    textbox-prompt-colon {
+        expand: false;
+        str: ":";
     }
 
     entry {
-        text-color: ${colors.foreground};
-        placeholder-color: ${colors.color8};
-        placeholder: "Search...";
+        padding: 6px;
+        margin: 20px 0px 0px 10px;
+        text-color: @fg-col;
+        background-color: @bg-col;
     }
 
     listview {
-        background-color: transparent;
-        lines: 8;
-        spacing: 4px;
-        scrollbar: false;
+        border: 0px;
+        padding: 6px 0px 0px;
+        margin: 10px 0px 0px 20px;
+        columns: 2;
+        lines: 10;
+        background-color: @bg-col;
     }
 
     element {
-        background-color: transparent;
-        text-color: ${colors.foreground};
-        border-radius: 8px;
-        padding: 8px 10px;
-    }
-
-    element normal.urgent, element alternate.urgent {
-        text-color: ${colors.color1};
-    }
-
-    element selected {
-        background-color: ${colors.color4};
-        text-color: ${colors.background};
+        padding: 5px;
+        background-color: @bg-col;
+        text-color: @fg-col;
     }
 
     element-icon {
-        size: 24px;
-        padding: 0 10px 0 0;
+        size: 35px;
     }
 
-    element-text {
+    element selected {
+        background-color: @selected-col;
+        text-color: @fg-col2;
+    }
+
+    mode-switcher {
+        spacing: 0;
+    }
+
+    button {
+        padding: 10px;
+        background-color: @bg-col-light;
+        text-color: @grey;
         vertical-align: 0.5;
+        horizontal-align: 0.5;
+    }
+
+    button selected {
+        background-color: @bg-col;
+        text-color: @accent;
+    }
+
+    message {
+        background-color: @bg-col-light;
+        margin: 2px;
+        padding: 2px;
+        border-radius: 5px;
+    }
+
+    textbox {
+        padding: 6px;
+        margin: 20px 0px 0px 20px;
+        text-color: @accent;
+        background-color: @bg-col-light;
     }
   '';
 }
