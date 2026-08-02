@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     # Wayland, Theming & Desktop Utilities
     waypaper
-    swww
+    awww
     grim
     slurp
     swappy

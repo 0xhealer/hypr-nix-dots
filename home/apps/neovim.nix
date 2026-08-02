@@ -45,7 +45,7 @@
     # -----------------------------------------------------------------------
     # Embedded Lua Configuration (init.lua)
     # -----------------------------------------------------------------------
-    extraLuaConfig = ''
+    initLua = ''
       -- Set mapleader to space before anything else
       vim.g.mapleader = ' '
       vim.g.maplocalleader = ' '

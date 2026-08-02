@@ -13,7 +13,7 @@
     homeDirectory = "/home/healer";
     
     # State version (matches system stateVersion)
-    stateVersion = "24.05";
+    stateVersion = "26.05";
 
     # Global environment variables for Wayland/Hyprland
     sessionVariables = {
@@ -24,9 +24,6 @@
       GDK_BACKEND = "wayland,x11,*";
     };
   };
-
-  # Allow unfree packages in Home Manager context
-  nixpkgs.config.allowUnfree = true;
 
   # Let Home Manager install and manage itself
   programs.home-manager.enable = true;

@@ -90,7 +90,7 @@ in
     -- Autostart (equivalent of exec-once)
     hl.on("hyprland.start", function()
       hl.exec_cmd("waybar")
-      hl.exec_cmd("swww-daemon")
+      hl.exec_cmd("awww-daemon")
       hl.exec_cmd("waypaper --restore")
       hl.exec_cmd("wl-paste --watch cliphist store")
       -- dunst and hypridle run as their own systemd user services (see

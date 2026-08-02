@@ -30,7 +30,7 @@
 language = en
 folder = ~/.local/share/hypr-nix-dots/assets/wallpapers
 wallpaper = ~/.local/share/hypr-nix-dots/assets/wallpapers/6.png
-backend = swww
+backend = awww
 fill = fill
 sort = name
 subfolders = False
