@@ -2,7 +2,7 @@
 
 {
   imports = [
-    # ./rofi.nix  -- disabled per request (switching away from rofi); flip back any time
+    ./rofi.nix   # re-enabled as the always-available launcher regardless of which bar wins
     ./dunst.nix
   ];
 }

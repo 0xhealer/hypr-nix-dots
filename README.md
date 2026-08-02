@@ -23,7 +23,7 @@
 - [Blur & transparency](#blur--transparency)
 - [Keybinds](#keybinds)
 - [Layout](#layout)
-- [Switching between Waybar/Rofi and Quickshell](#switching-between-waybarrofi-and-quickshell)
+- [Quickshell (primary) with Waybar/Rofi as fallback](#quickshell-primary-with-waybarrofi-as-fallback)
 - [Customizing](#customizing)
 - [Troubleshooting](#troubleshooting)
 - [Credits](#credits)
@@ -66,7 +66,7 @@ doesn't change when you pick a new one (see below).
 |---|---|
 | Compositor | Hyprland (`wayland.windowManager.hyprland`) |
 | Status bar | Waybar |
-| App launcher | Rofi |
+| App launcher | Vicinae (primary), Rofi (always available) |
 | Notifications | Dunst |
 | Terminal | Kitty, with Alacritty installed as a fallback |
 | Spotify theming | Spicetify (Dracula theme) |
@@ -158,6 +158,8 @@ Set in `home/desktop/hyprland.nix`:
 | `Super + Q` | Close focused window |
 | `Super + E` | File manager (Thunar) |
 | `Super + R` | App launcher (Rofi) |
+| `Super + Space` | App launcher (Vicinae) |
+| `Alt + Space` | Clipboard history (Vicinae) |
 | `Super + V` | Clipboard history |
 | `Super + L` | Lock screen (hyprlock) |
 | `Super + Shift + Q` | Power menu (wlogout) |
@@ -190,8 +192,8 @@ home/
     hyprlock.nix                lock screen
     hypridle.nix                idle/suspend daemon
     wlogout.nix                 power menu
-    waybar.nix                  status bar (currently unused — see below)
-    quickshell.nix               status bar (currently active)
+    waybar.nix                  status bar (fallback if quickshell fails)
+    quickshell.nix               status bar (primary)
     rofi.nix                    app launcher
     dunst.nix                   notifications
     shell.nix                   imports rofi.nix + dunst.nix
@@ -219,25 +221,32 @@ home/
 - **Blur/opacity values**: same file, the `decoration` block inside
   `hl.config({...})`.
 
-## Switching between Waybar/Rofi and Quickshell
+## Quickshell (primary) with Waybar/Rofi as fallback
 
-Currently active: **Quickshell** for the bar (ported from harsh-m-patil/.dotfiles'
-`main` branch, recolored to `colors.nix`), no app launcher bound (Rofi is
-disabled). Waybar and Rofi's files are untouched, just unhooked, so you can
-flip back any time:
+Both are installed and configured — Quickshell is the primary bar
+(ported from harsh-m-patil/.dotfiles' `main` branch, recolored to
+`colors.nix`), with Waybar as an automatic fallback if it fails to start.
+Rofi is always available (`Super+R` / `Super+V`) since Quickshell has no
+launcher built in.
 
-- `home/desktop/default.nix` — uncomment `./waybar.nix`, comment out
-  `./quickshell.nix`
-- `home/desktop/shell.nix` — uncomment `./rofi.nix`
-- `home/desktop/hyprland.nix` — swap the `exec_cmd("qs")` autostart line
-  back to `exec_cmd("waybar")`, and uncomment the `Super+R`/`Super+V`
-  binds (they call `rofi`, which isn't installed while `rofi.nix` is
-  disabled)
+The autostart logic in `home/desktop/hyprland.nix` (in the
+`hl.on("hyprland.start", ...)` block):
+```lua
+qs > /tmp/qs-debug.log 2>&1 &
+sleep 2
+pgrep -x qs >/dev/null || waybar &
+```
+Quickshell starts in the background, logging to `/tmp/qs-debug.log`. After
+2 seconds, if the `qs` process isn't found running, Waybar starts instead.
+If you ever want to go back to Waybar as the *only* bar (no Quickshell
+attempt at all), just replace that whole line with a plain
+`hl.exec_cmd("waybar")`, and re-enable the `hl.layer_rule` blur entry for
+Waybar if you'd disabled it.
 
 Quickshell itself has no launcher built in (it's bar-only in this port) —
-if you want an app launcher back without reverting to Rofi, you'd need to
-add one separately (their own setup uses a tool called `vicinae` for that,
-not included here).
+their own setup uses **Vicinae** for that (`Super+Space`), which is now
+wired up too, matching their real config. Rofi (`Super+R`) stays available
+as well since it doesn't hurt to have both.
 
 ## Troubleshooting
 
@@ -297,4 +306,5 @@ manual fallback.
 - [Bibata cursors](https://github.com/ful1e5/Bibata_Cursor)
 - [Catppuccin for SDDM](https://github.com/catppuccin/sddm)
 - [Spicetify](https://spicetify.app) / [spicetify-nix](https://github.com/Gerg-L/spicetify-nix)
+- [Vicinae](https://github.com/vicinaehq/vicinae)
 - [Home Manager](https://github.com/nix-community/home-manager)
