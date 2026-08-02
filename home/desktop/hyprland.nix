@@ -100,7 +100,7 @@ in
     -- Autostart (equivalent of exec-once)
     hl.on("hyprland.start", function()
       -- hl.exec_cmd("waybar")  -- swapped for qs (quickshell); flip back any time
-      hl.exec_cmd("qs")
+      hl.exec_cmd("sh -c 'qs > /tmp/qs-debug.log 2>&1'")
       hl.exec_cmd("awww-daemon")
       hl.exec_cmd("waypaper --restore")
       hl.exec_cmd("wl-paste --watch cliphist store")
