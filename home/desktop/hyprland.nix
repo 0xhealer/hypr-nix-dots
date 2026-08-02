@@ -99,7 +99,8 @@ in
 
     -- Autostart (equivalent of exec-once)
     hl.on("hyprland.start", function()
-      hl.exec_cmd("waybar")
+      -- hl.exec_cmd("waybar")  -- swapped for qs (quickshell); flip back any time
+      hl.exec_cmd("qs")
       hl.exec_cmd("awww-daemon")
       hl.exec_cmd("waypaper --restore")
       hl.exec_cmd("wl-paste --watch cliphist store")
@@ -124,7 +125,7 @@ in
     -- (see the VM note near the top of this file) — the config is correct
     -- and will take effect once you're back on hardware-accelerated
     -- rendering.
-    hl.layer_rule({ match = { namespace = "waybar" }, blur = true, ignore_alpha = 0.3 })
+    -- hl.layer_rule({ match = { namespace = "waybar" }, blur = true, ignore_alpha = 0.3 })  -- inert while on quickshell; flip back with waybar
     hl.layer_rule({ match = { namespace = "rofi" }, blur = true, ignore_alpha = 0.3 })
 
     -- Keybinds — tries Kitty first, falls back to Alacritty if Kitty
@@ -132,8 +133,8 @@ in
     hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("kitty > /tmp/kitty-debug.log 2>&1 || alacritty"))
     hl.bind(mainMod .. " + Q", hl.dsp.window.close())
     hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("thunar"))
-    hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("rofi -show drun"))
-    hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))
+    -- hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("rofi -show drun"))  -- rofi.nix disabled; no launcher bound right now
+    -- hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))  -- same, needs rofi
     hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
     hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd("wlogout --layout ~/.config/wlogout/layout.json --css ~/.config/wlogout/style.css -b 5"))
     hl.bind("PRINT", hl.dsp.exec_cmd('grim -g "$(slurp)" - | swappy -f -'))

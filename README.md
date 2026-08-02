@@ -23,6 +23,7 @@
 - [Blur & transparency](#blur--transparency)
 - [Keybinds](#keybinds)
 - [Layout](#layout)
+- [Switching between Waybar/Rofi and Quickshell](#switching-between-waybarrofi-and-quickshell)
 - [Customizing](#customizing)
 - [Troubleshooting](#troubleshooting)
 - [Credits](#credits)
@@ -189,7 +190,8 @@ home/
     hyprlock.nix                lock screen
     hypridle.nix                idle/suspend daemon
     wlogout.nix                 power menu
-    waybar.nix                  status bar
+    waybar.nix                  status bar (currently unused — see below)
+    quickshell.nix               status bar (currently active)
     rofi.nix                    app launcher
     dunst.nix                   notifications
     shell.nix                   imports rofi.nix + dunst.nix
@@ -216,6 +218,26 @@ home/
 - **Keybinds**: same file, the `hl.bind(...)` calls near the bottom.
 - **Blur/opacity values**: same file, the `decoration` block inside
   `hl.config({...})`.
+
+## Switching between Waybar/Rofi and Quickshell
+
+Currently active: **Quickshell** for the bar (ported from harsh-m-patil/.dotfiles'
+`main` branch, recolored to `colors.nix`), no app launcher bound (Rofi is
+disabled). Waybar and Rofi's files are untouched, just unhooked, so you can
+flip back any time:
+
+- `home/desktop/default.nix` — uncomment `./waybar.nix`, comment out
+  `./quickshell.nix`
+- `home/desktop/shell.nix` — uncomment `./rofi.nix`
+- `home/desktop/hyprland.nix` — swap the `exec_cmd("qs")` autostart line
+  back to `exec_cmd("waybar")`, and uncomment the `Super+R`/`Super+V`
+  binds (they call `rofi`, which isn't installed while `rofi.nix` is
+  disabled)
+
+Quickshell itself has no launcher built in (it's bar-only in this port) —
+if you want an app launcher back without reverting to Rofi, you'd need to
+add one separately (their own setup uses a tool called `vicinae` for that,
+not included here).
 
 ## Troubleshooting
 

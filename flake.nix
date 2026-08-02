@@ -28,9 +28,18 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    vicinae = {
+      url = "github:vicinaehq/vicinae";
+    };
+
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-vscode-extensions, zen-browser, helium-browser, spicetify-nix, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nix-vscode-extensions, zen-browser, helium-browser, spicetify-nix, vicinae, vicinae-extensions, ... }@inputs:
     let
       system = "x86_64-linux";
     in
@@ -49,6 +58,7 @@
 
               home-manager.backupFileExtension = "backup";
               home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.sharedModules = [ vicinae.homeManagerModules.default ];
 
               home-manager.users.healer = {
                 imports = [
