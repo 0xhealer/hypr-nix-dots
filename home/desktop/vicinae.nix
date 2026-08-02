@@ -21,10 +21,11 @@
       };
     };
 
-    extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
-      bluetooth
-      nix
-      power-profile
-    ];
+    # Extensions removed — "bluetooth"/"nix"/"power-profile" were an
+    # unverified guess at what's in vicinae-extensions' package set, and at
+    # least "bluetooth" doesn't actually exist there. Find the real names
+    # with `nix eval github:vicinaehq/extensions#packages.x86_64-linux
+    # --apply builtins.attrNames` and add them back here if wanted.
+    extensions = [ ];
   };
 }
