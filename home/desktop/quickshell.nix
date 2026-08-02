@@ -129,7 +129,7 @@ ShellRoot {
                 if (!data) return
                 var parts = data.trim().split(/\s+/)
                 var percentStr = parts[4] || "0%"
-                diskUsage = parseInt(percentStr.replace('%', '')) || 0
+                diskUsage = parseInt(percentStr.replace('%', ''')) || 0
             }
         }
         Component.onCompleted: running = true
