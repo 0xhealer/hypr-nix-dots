@@ -63,7 +63,7 @@ let
       owner = "EliverLara";
       repo = "Sweet-folders";
       rev = "master";
-      hash = lib.fakeHash;
+      hash = "sha256-Pb3xsNKM5yGT4uAUxrCds1JSSvU/whhTJcmqiM7EW+4=";
     };
     dontBuild = true;
     installPhase = ''
