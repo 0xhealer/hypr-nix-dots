@@ -4,14 +4,15 @@
   # -------------------------------------------------------------------------
   # GTK Config — theme, icons, and cursor all pulled straight from nixpkgs.
   #
-  # We tried building the exact Sweet-Mars variant + Sweet-cursors +
-  # Sweet-folders from EliverLara's upstream GitHub repos, but that meant
-  # chasing fake-hash placeholders derivation by derivation, and then a
-  # genuine 404 (Sweet-cursors isn't a maintained standalone repo anymore —
-  # its actual home is a "nova" branch inside the main Sweet repo). None of
-  # that is worth the churn for a purely cosmetic layer, so this uses the
-  # closest equivalents that are already packaged and hash-verified in
-  # nixpkgs: no custom fetchFromGitHub, no hash-guessing, no 404s.
+  # We tried the exact Sweet-Mars variant + Sweet-cursors + Sweet-folders
+  # built from EliverLara's upstream GitHub repos, then nixpkgs' own `sweet`
+  # package once that failed — but `sweet` has since been removed from
+  # nixpkgs entirely (its dependency `gtk-engine-murrine` was dropped for
+  # being unmaintained GTK2-only). None of that is worth the churn for a
+  # purely cosmetic layer, so this now uses adw-gtk3 — an actively
+  # maintained GTK3 port of libadwaita with no legacy-engine dependencies —
+  # plus candy-icons and Bibata cursors, all hash-verified in nixpkgs
+  # already. No custom fetchFromGitHub, no hash-guessing, no 404s.
   # -------------------------------------------------------------------------
   gtk = {
     enable = true;
@@ -22,8 +23,8 @@
     };
 
     theme = {
-      name = "Sweet-Dark";
-      package = pkgs.sweet;
+      name = "adw-gtk3-dark";
+      package = pkgs.adw-gtk3;
     };
 
     iconTheme = {
@@ -56,5 +57,6 @@
 
   # Qt apps follow the same theme via qt5ct/qt6ct
   home.sessionVariables.QT_QPA_PLATFORMTHEME = "qt5ct";
+  home.sessionVariables.GTK_THEME = "adw-gtk3-dark";
   home.packages = with pkgs; [ libsForQt5.qt5ct qt6Packages.qt6ct ];
 }

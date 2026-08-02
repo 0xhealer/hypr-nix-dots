@@ -4,7 +4,7 @@
   # hypr-nix-dots
 
   **NixOS + Hyprland**, built with flakes and Home Manager.
-  Sweet GTK theme · wallust-driven dynamic color palette · blur and transparency everywhere.
+  adw-gtk3 theme · wallust-driven dynamic color palette · blur and transparency everywhere.
 
   ![NixOS](https://img.shields.io/badge/NixOS-unstable-5277C3?logo=nixos&logoColor=white)
   ![Hyprland](https://img.shields.io/badge/Hyprland-Wayland-9580FF?logo=wayland&logoColor=white)
@@ -74,7 +74,7 @@ whole color palette (details below).
 | Wallpaper daemon | swww |
 | GUI wallpaper picker | Waypaper |
 | Central color palette | **wallust** — regenerates Waybar/Kitty/Rofi/Dunst/Hyprland colors from whatever wallpaper you pick |
-| GTK theme | Sweet (Dark) |
+| GTK theme | adw-gtk3 (dark) |
 | Icons | candy-icons |
 | Cursor | Bibata-Modern-Ice |
 | Qt theming | qt5ct / qt6ct |
@@ -173,7 +173,7 @@ home/
 
   style/
     wallust.nix                 wallust config + templates + seeding activation script
-    gtk.nix                     Sweet GTK theme, candy-icons, Bibata-Modern-Ice cursor — all nixpkgs-native
+    gtk.nix                     adw-gtk3 theme, candy-icons, Bibata-Modern-Ice cursor — all nixpkgs-native
 
   apps/                        terminal tools, editor (kitty), git, vscode,
                                 media, fish shell, fastfetch, neovim, starship
@@ -214,6 +214,7 @@ session start rather than tracked by systemd, on purpose (see
 - [Hyprland](https://hyprland.org)
 - [wallust](https://codeberg.org/explosion-mental/wallust)
 - [Waypaper](https://github.com/anufrievroman/waypaper) / [swww](https://github.com/LGFae/swww)
-- [Sweet](https://github.com/EliverLara/Sweet), [candy-icons](https://github.com/EliverLara/candy-icons) — by [EliverLara](https://github.com/EliverLara)
+- [adw-gtk3](https://github.com/lassekongo83/adw-gtk3)
+- [candy-icons](https://github.com/EliverLara/candy-icons) — by [EliverLara](https://github.com/EliverLara)
 - [Bibata cursors](https://github.com/ful1e5/Bibata_Cursor)
 - [Home Manager](https://github.com/nix-community/home-manager)
