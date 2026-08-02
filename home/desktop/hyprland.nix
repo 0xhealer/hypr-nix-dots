@@ -72,20 +72,21 @@ in
       },
 
       decoration = {
-        rounding = 10,
-        active_opacity = 0.92,
-        inactive_opacity = 0.85,
+        rounding = 14,
+        active_opacity = 0.90,
+        inactive_opacity = 0.80,
         blur = {
           enabled = true,
-          size = 8,
+          size = 10,
           passes = 4,
           new_optimizations = true,
           ignore_opacity = true,
           xray = false,
+          vibrancy = 0.20,
         },
         shadow = {
           enabled = true,
-          range = 12,
+          range = 16,
         },
       },
 
@@ -119,6 +120,17 @@ in
     hl.window_rule({ match = { class = "^(kitty)$" }, opacity = "0.90 0.85" })
     hl.window_rule({ match = { class = "^(Alacritty)$" }, opacity = "0.90 0.85" })
     hl.window_rule({ match = { class = "^(thunar)$" }, opacity = "0.95 0.90" })
+
+    -- Layer rules — glassmorphism needs these, not just CSS transparency.
+    -- CSS alpha alone gives a flat tinted look; this is what actually
+    -- blurs what's *behind* Waybar/Rofi (confirmed via the official wiki:
+    -- https://wiki.hypr.land/Configuring/Basics/Window-Rules/). NOTE: this
+    -- won't visually render while forced onto the Pixman software renderer
+    -- (see the VM note near the top of this file) — the config is correct
+    -- and will take effect once you're back on hardware-accelerated
+    -- rendering.
+    hl.layer_rule({ match = { namespace = "waybar" }, blur = true, ignore_alpha = 0.3 })
+    hl.layer_rule({ match = { namespace = "rofi" }, blur = true, ignore_alpha = 0.3 })
 
     -- Keybinds — tries Kitty first, falls back to Alacritty if Kitty
     -- crashes/exits immediately; output still logged for diagnosis.

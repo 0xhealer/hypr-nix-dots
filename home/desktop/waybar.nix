@@ -10,7 +10,10 @@ in
       mainBar = {
         layer = "top";
         position = "top";
-        height = 30;
+        height = 26;
+        margin-top = 6;
+        margin-left = 16;
+        margin-right = 16;
         modules-left = [ "hyprland/workspaces" ];
         modules-center = [ "clock" ];
         modules-right = [ "pulseaudio" "network" "battery" "tray" ];
@@ -33,28 +36,34 @@ in
     style = ''
       * {
           font-family: "JetBrainsMono Nerd Font";
-          font-size: 13px;
+          font-size: 12px;
       }
 
       window#waybar {
-          background: alpha(${colors.background}, 0.75);
+          background: alpha(${colors.background}, 0.55);
           color: ${colors.foreground};
-          border-radius: 10px;
-          margin: 6px 10px;
+          border-radius: 14px;
+          border: 1px solid alpha(${colors.foreground}, 0.08);
+      }
+
+      #workspaces, #clock, #pulseaudio, #network, #battery, #tray {
+          margin: 3px 2px;
+          padding: 0 6px;
       }
 
       #workspaces button {
-          padding: 0 8px;
+          padding: 0 6px;
           color: ${colors.foreground};
-      }
-
-      #workspaces button.active {
-          background: alpha(${colors.color4}, 0.4);
           border-radius: 8px;
       }
 
-      #clock, #pulseaudio, #network, #battery, #tray {
-          padding: 0 10px;
+      #workspaces button.active {
+          background: alpha(${colors.color4}, 0.35);
+          border-radius: 8px;
+      }
+
+      #clock {
+          font-weight: 600;
       }
     '';
   };
