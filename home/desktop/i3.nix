@@ -96,7 +96,7 @@ in
     };
   };
 
-  home.packages = [ pkgs.polybar pkgs.i3lock-color pkgs.feh ];
+  home.packages = [ pkgs.polybar pkgs.i3lock-color pkgs.feh pkgs.picom ];
 
   # -------------------------------------------------------------------------
   # picom config — mirrors Hyprland's decoration block (home/desktop/
