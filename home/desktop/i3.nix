@@ -94,6 +94,16 @@ in
         inner = 8;
         outer = 4;
       };
+
+      window = {
+        titlebars = false;
+        border = 0;
+      };
+
+      floating = {
+        titlebars = false;
+        border = 0;
+      };
     };
   };
 
