@@ -144,6 +144,8 @@ in
     hl.bind("ALT + Space", hl.dsp.exec_cmd("vicinae vicinae://extensions/vicinae/clipboard/history"))
     hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))
     hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
+    hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("waypaper"))
+    hl.bind(mainMod .. " + SHIFT + Slash", hl.dsp.exec_cmd("rofi -dmenu -i -p 'Keybindings' < ~/.local/share/hypr-nix-dots/assets/keybindings.txt"))
     hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd("wlogout --layout ~/.config/wlogout/layout.json --css ~/.config/wlogout/style.css -b 5"))
     hl.bind("PRINT", hl.dsp.exec_cmd('grim -g "$(slurp)" - | swappy -f -'))
 

@@ -32,12 +32,27 @@ in
       # mkOptionDefault merges these with i3's own sensible built-in
       # defaults (workspace switching, window navigation, etc.) instead of
       # replacing them outright — only overriding/adding what's needed.
+      # Kept consistent with Hyprland's binds (home/desktop/hyprland.nix) —
+      # same key does the same thing in both sessions wherever an X11
+      # equivalent exists. See assets/keybindings.txt for the full list.
       keybindings = lib.mkOptionDefault {
         "Mod4+Return" = "exec kitty";
-        "Mod4+d" = "exec rofi -show drun";
+        "Mod4+q" = "kill";
+        "Mod4+e" = "exec thunar";
+        "Mod4+r" = "exec rofi -show drun";
+        "Mod4+space" = "exec rofi -show drun"; # no Vicinae on X11 — Rofi covers the "primary launcher" role here too
         "Mod4+Shift+w" = "exec nitrogen ~/.local/share/hypr-nix-dots/assets/wallpapers";
-        "Mod4+Shift+q" = "kill";
-        "Mod4+Shift+e" = "exec i3-msg exit";
+        "Mod4+Shift+slash" = "exec rofi -dmenu -i -p 'Keybindings' < ~/.local/share/hypr-nix-dots/assets/keybindings.txt";
+        "Mod4+Shift+q" = "exec i3-msg exit"; # closest X11 equivalent to Hyprland's wlogout power menu
+        "Print" = "exec maim -s ~/Pictures/Screenshots/$(date +%Y-%m-%d-%H%M%S).png";
+        "XF86AudioRaiseVolume" = "exec pamixer -i 5";
+        "XF86AudioLowerVolume" = "exec pamixer -d 5";
+        "XF86AudioMute" = "exec pamixer -t";
+        "XF86AudioPlay" = "exec playerctl play-pause";
+        "XF86AudioNext" = "exec playerctl next";
+        "XF86AudioPrev" = "exec playerctl previous";
+        "XF86MonBrightnessUp" = "exec brightnessctl set +10%";
+        "XF86MonBrightnessDown" = "exec brightnessctl set 10%-";
         "Mod4+l" = ''exec --no-startup-id i3lock-color \
           --insidecolor=${strip colors.background}dd \
           --ringcolor=${strip colors.color4}ff \
@@ -117,6 +132,7 @@ in
     pkgs.i3lock-color
     pkgs.nitrogen
     pkgs.picom
+    pkgs.maim # X11 equivalent of grim, for the Print screenshot bind
   ];
 
   # -------------------------------------------------------------------------

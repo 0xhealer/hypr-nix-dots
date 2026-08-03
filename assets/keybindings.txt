@@ -1,0 +1,25 @@
+KEYBINDINGS — Hyprland & i3 (kept consistent between both sessions)
+
+  Super + Return          Terminal (Kitty, falls back to Alacritty)
+  Super + Q               Close focused window
+  Super + E                File manager (Thunar)
+  Super + R                App launcher (Rofi)
+  Super + Space            Primary launcher (Vicinae on Hyprland / Rofi on i3)
+  Super + Shift + W        Wallpaper picker (Waypaper on Hyprland / nitrogen on i3)
+  Super + L                Lock screen (hyprlock / i3lock-color)
+  Super + Shift + Q        Logout / power menu (wlogout on Hyprland / exit i3 on i3)
+  Super + Shift + /        Show this keybindings list
+  Print                    Screenshot, region select (grim+slurp / maim+slop)
+  Super + 1..4              Switch to workspace 1-4
+  Super + Shift + 1..4      Move focused window to workspace 1-4
+  Super + drag (LMB)        Move window (Hyprland only)
+  Super + drag (RMB)        Resize window (Hyprland only)
+
+  Alt + Space               Vicinae clipboard history (Hyprland only)
+  Super + V                 Clipboard history via cliphist+Rofi (Hyprland only —
+                             not yet set up on i3, cliphist is Wayland-specific)
+
+  Volume Up/Down            Adjust volume
+  Mute                      Toggle mute
+  Brightness Up/Down        Adjust screen brightness
+  Media Play/Pause/Next/Prev  Control media playback
