@@ -107,7 +107,17 @@ in
     };
   };
 
-  home.packages = [ pkgs.polybar pkgs.i3lock-color pkgs.nitrogen pkgs.picom ];
+  home.packages = [
+    (pkgs.polybar.override {
+      i3Support = true;
+      pulseSupport = true;
+      nlSupport = true; # wired network (netlink) support
+      iwSupport = true; # wireless network support — for the real laptop; this VM has no wifi adapter at all, so the network module will still show disabled here regardless, same as the battery module
+    })
+    pkgs.i3lock-color
+    pkgs.nitrogen
+    pkgs.picom
+  ];
 
   # -------------------------------------------------------------------------
   # nitrogen — the X11 equivalent of Waypaper: a GUI wallpaper browser
