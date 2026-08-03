@@ -111,7 +111,7 @@ in
     style = ''
       * {
           font-family: "JetBrainsMono Nerd Font", Roboto, Helvetica, Arial, sans-serif;
-          font-size: 12px;
+          font-size: 13px;
       }
 
       window#waybar {

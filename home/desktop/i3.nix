@@ -164,7 +164,6 @@ EOF
     corner-radius = 8;
     round-borders = 1;
     rounded-corners-exclude = [
-      "window_type = 'dock'",
       "window_type = 'desktop'"
     ];
 
@@ -176,7 +175,6 @@ EOF
     blur-background-frame = true;
     blur-background-fixed = true;
     blur-background-exclude = [
-      "window_type = 'dock'",
       "window_type = 'desktop'"
     ];
 
@@ -188,7 +186,8 @@ EOF
     opacity-rule = [
       "90:class_g = 'kitty'",
       "90:class_g = 'Alacritty'",
-      "95:class_g = 'Thunar'"
+      "95:class_g = 'Thunar'",
+      "85:window_type = 'dock'"
     ];
 
     shadow = false;
@@ -226,9 +225,11 @@ EOF
     disabled = ${colors.color8}
 
     [bar/mainbar]
-    width = 100%
+    width = 98%
+    offset-x = 1%
+    offset-y = 6
     height = 30
-    radius = 8
+    radius = 12
     fixed-center = true
 
     background = ${colors.background}dd
