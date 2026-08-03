@@ -65,6 +65,7 @@ doesn't change when you pick a new one (see below).
 | Purpose | Package / Module |
 |---|---|
 | Compositor | Hyprland (`wayland.windowManager.hyprland`) |
+| Secondary session | i3 (X11) with picom (blur), Polybar (status bar), i3lock-color (lock screen) — all Nord-themed, for guests used to i3 rather than Hyprland |
 | Status bar | Waybar |
 | App launcher | Vicinae (primary), Rofi (always available) |
 | Notifications | Dunst |

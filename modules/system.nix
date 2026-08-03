@@ -4,6 +4,9 @@
   # Bootloader Configuration
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  # 10s so the boot menu is visible/selectable — useful for picking an
+  # older generation to roll back to if a rebuild ever breaks something.
+  boot.loader.timeout = 10;
 
   # Enable Nix Flakes & CLI Tools
   nix.settings = {

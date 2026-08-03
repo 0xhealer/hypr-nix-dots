@@ -9,5 +9,6 @@
         ./wlogout.nix
         ./shell.nix
         ./tools.nix
+        ./i3.nix
     ];
 }

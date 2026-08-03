@@ -7,5 +7,6 @@
         ./services.nix
         ./system.nix
         ./virtualisation.nix
+        ./i3.nix
     ];
 }
