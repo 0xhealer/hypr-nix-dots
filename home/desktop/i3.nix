@@ -63,11 +63,21 @@ in
           notification = false;
         }
         {
+          command = "feh --bg-fill ~/.local/share/hypr-nix-dots/assets/wallpapers/6.png";
+          always = true;
+          notification = false;
+        }
+        {
           command = "polybar mainbar";
           always = true;
           notification = false;
         }
       ];
+
+      # Explicitly empty — home-manager's i3 module has its own default
+      # bar (classic i3bar + i3status) that stays active otherwise, which
+      # is what was showing up as a second bar alongside Polybar.
+      bars = [ ];
 
       colors = {
         focused = {
@@ -86,7 +96,7 @@ in
     };
   };
 
-  home.packages = [ pkgs.polybar pkgs.i3lock-color ];
+  home.packages = [ pkgs.polybar pkgs.i3lock-color pkgs.feh ];
 
   # -------------------------------------------------------------------------
   # picom config — mirrors Hyprland's decoration block (home/desktop/
