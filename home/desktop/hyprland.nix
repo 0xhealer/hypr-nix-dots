@@ -106,7 +106,7 @@ in
       -- hl.exec_cmd("waybar")  -- swapped for qs (quickshell); flip back any time
       -- Quickshell first; if it crashes or exits within 2s, fall back to Waybar.
       -- (mirrors the same try-then-fallback pattern used for Kitty/Alacritty below)
-      hl.exec_cmd("sh -c 'qs > /tmp/qs-debug.log 2>&1 & sleep 2; pgrep -x qs >/dev/null || waybar &'")
+      hl.exec_cmd("sh -c 'qs > /tmp/qs-debug.log 2>&1 & sleep 2; pgrep -x qs >/dev/null || (sleep 1; waybar) &'")
       hl.exec_cmd("awww-daemon")
       hl.exec_cmd("waypaper --restore")
       hl.exec_cmd("wl-paste --watch cliphist store")

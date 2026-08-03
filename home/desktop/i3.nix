@@ -35,6 +35,7 @@ in
       keybindings = lib.mkOptionDefault {
         "Mod4+Return" = "exec kitty";
         "Mod4+d" = "exec rofi -show drun";
+        "Mod4+Shift+w" = "exec nitrogen ~/.local/share/hypr-nix-dots/assets/wallpapers";
         "Mod4+Shift+q" = "kill";
         "Mod4+Shift+e" = "exec i3-msg exit";
         "Mod4+l" = ''exec --no-startup-id i3lock-color \
@@ -63,12 +64,12 @@ in
           notification = false;
         }
         {
-          command = "feh --bg-fill ~/.local/share/hypr-nix-dots/assets/wallpapers/6.png";
+          command = "nitrogen --restore";
           always = true;
           notification = false;
         }
         {
-          command = "polybar mainbar";
+          command = "sh -c 'sleep 1.5 && polybar mainbar'";
           always = true;
           notification = false;
         }
@@ -96,7 +97,38 @@ in
     };
   };
 
-  home.packages = [ pkgs.polybar pkgs.i3lock-color pkgs.feh pkgs.picom ];
+  home.packages = [ pkgs.polybar pkgs.i3lock-color pkgs.nitrogen pkgs.picom ];
+
+  # -------------------------------------------------------------------------
+  # nitrogen — the X11 equivalent of Waypaper: a GUI wallpaper browser
+  # (Super+Shift+W opens it, pointed at assets/wallpapers/). Seeded with a
+  # default wallpaper the same way Waypaper's config.ini is seeded — as a
+  # writable file, not xdg.configFile, since nitrogen rewrites its own
+  # config every time you pick a new wallpaper through the GUI, and
+  # home-manager-managed files would be read-only symlinks it can't save to.
+  # -------------------------------------------------------------------------
+  home.activation.seedNitrogenConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    mkdir -p "$HOME/.config/nitrogen"
+    [ -f "$HOME/.config/nitrogen/nitrogen.cfg" ] || cat > "$HOME/.config/nitrogen/nitrogen.cfg" <<'EOF'
+[geometry]
+posx=0
+posy=0
+width=800
+height=600
+
+[nitrogen]
+recurse=false
+sort=alphabetic
+icon_caption=true
+dirs=/home/healer/.local/share/hypr-nix-dots/assets/wallpapers;
+EOF
+    [ -f "$HOME/.config/nitrogen/bg-saved.cfg" ] || cat > "$HOME/.config/nitrogen/bg-saved.cfg" <<'EOF'
+[xin_-1]
+file=/home/healer/.local/share/hypr-nix-dots/assets/wallpapers/6.png
+mode=5
+bgcolor=#000000
+EOF
+  '';
 
   # -------------------------------------------------------------------------
   # picom config — mirrors Hyprland's decoration block (home/desktop/
