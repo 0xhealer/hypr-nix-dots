@@ -202,8 +202,7 @@ EOF
     opacity-rule = [
       "90:class_g = 'kitty'",
       "90:class_g = 'Alacritty'",
-      "95:class_g = 'Thunar'",
-      "85:window_type = 'dock'"
+      "95:class_g = 'Thunar'"
     ];
 
     shadow = false;
@@ -248,7 +247,7 @@ EOF
     radius = 12
     fixed-center = true
 
-    background = ${colors.background}dd
+    background = ${colors.background}ee
     foreground = ${colors.foreground}
 
     line-size = 0
