@@ -96,12 +96,12 @@ in
       };
 
       window = {
-        titlebars = false;
+        titlebar = false;
         border = 0;
       };
 
       floating = {
-        titlebars = false;
+        titlebar = false;
         border = 0;
       };
     };
