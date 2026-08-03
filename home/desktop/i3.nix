@@ -247,7 +247,7 @@ EOF
     radius = 12
     fixed-center = true
 
-    background = ${colors.background}ee
+    background = #ee${strip colors.background}
     foreground = ${colors.foreground}
 
     line-size = 0
